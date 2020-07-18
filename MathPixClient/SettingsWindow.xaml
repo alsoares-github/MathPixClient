@@ -1,0 +1,23 @@
+﻿<Window x:Class="MathPixClient.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MathPixClient"
+        mc:Ignorable="d"
+        Title="MathPix API Credentials" Height="150" Width="800" ResizeMode="NoResize" Closed="Window_Closed">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="app_id" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" />
+        <TextBlock Text="app_key" Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Source={x:Static local:Settings.Default}, Path=app_id}" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Source={x:Static local:Settings.Default}, Path=app_key}"/>
+    </Grid>
+</Window>
