@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MathPixClient"
         mc:Ignorable="d"
-        Title="MathPix API Client" Height="450" Width="800">
+        Title="MathPix API Client" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
+  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -17,7 +19,8 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="OCR" Click="OCR_Button_Click"/>
         <Button Grid.Column="1" Grid.Row="0" Content="Credentials" Click="Credentials_Button_Click"/>
-        <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" />
+        <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap"
+                 Text="{Binding ocrResult}"/>
 
     </Grid>
 </Window>

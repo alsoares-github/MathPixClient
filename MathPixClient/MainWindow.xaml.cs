@@ -9,21 +9,65 @@ using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using System.IO;
 using System;
+using System.ComponentModel;
 
 namespace MathPixClient
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public static HttpClient client { get; set; }
+
+        private string _rawOcr;
+        private string _ocrResult;
+        private List<(string, string)> _substitutions =
+            new List<(string, string)>
+            {
+                ("\\(", "[$]"),
+                ("\\)", "[/$]"),
+                ("\\[", "<dd>[$$]"),
+                ("\\]", "[/$$]</dd>"),
+                ("\\bar", "\\overline")
+            };
+        public string ocrResult
+        {
+            get { return _ocrResult; }
+            set
+            {
+                _rawOcr = value;
+                _ocrResult = Process(_rawOcr);
+                NotifyPropertyChanged(nameof(ocrResult));
+            }
+        }
         public MainWindow()
         {
             client = new HttpClient();
+
+            ocrResult = "None";
+            
             InitializeHeader();
             
             InitializeComponent();
+        }
+
+        private string Process(string input)
+        {
+            string result = input;
+
+            foreach (var (a, b) in _substitutions)
+            {
+                result = result.Replace(a, b);
+            }
+
+            return result;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void Credentials_Button_Click(object sender, RoutedEventArgs e)
@@ -46,17 +90,22 @@ namespace MathPixClient
 
         private async void OCR_Button_Click(object sender, RoutedEventArgs e)
         {
-            RequestOCR();
+            try
+            {
+                ocrResult = await RequestOCR();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private async Task<string> RequestOCR()
         {
 
-            //string image = "data:image/png;base64,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";
-
             var image = GetImageFromClipboard();
 
-            if (image == null) return null;
+            if (image == null) return "No image on clipboard";
 
             var json = JsonConvert.SerializeObject(new Request { src = "data:image/png;base64," + image });
 
@@ -65,9 +114,16 @@ namespace MathPixClient
                 new StringContent(json, Encoding.UTF8, "application/json")
                 );
 
-            var x = reply.Content.ReadAsAsync<Response>();
-
-            return x.Result.text;
+            if (reply.IsSuccessStatusCode)
+            {
+                var x = await reply.Content.ReadAsAsync<Response>();
+                return x.text;
+            }
+            else
+            {
+                throw new Exception(reply.ReasonPhrase);
+            }
+            
         }
 
         private string GetImageFromClipboard()
