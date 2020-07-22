@@ -73,7 +73,7 @@ namespace MathPixClient
         private void Credentials_Button_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow sw = new SettingsWindow();
-            sw.Show();
+            sw.ShowDialog();
         }
 
         private void InitializeHeader()
