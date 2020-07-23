@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MathPixClient"
         mc:Ignorable="d"
-        Title="MathPix API Credentials" Height="150" Width="800" ResizeMode="NoResize" Closed="Window_Closed">
+        Title="MathPix API Credentials" Height="150" Width="800"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow"
+        Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />

@@ -141,6 +141,12 @@ namespace MathPixClient
 
             return Convert.ToBase64String(ms.ToArray());
         }
+
+        private void GroupButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            SubstitutionsWindow wd = new SubstitutionsWindow();
+            wd.ShowDialog();
+        }
     }
 
     public class Response

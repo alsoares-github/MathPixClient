@@ -20,13 +20,17 @@ namespace MathPixClient
         public SettingsWindow()
         {
             InitializeComponent();
+
+            MainWindow win = Application.Current.MainWindow as MainWindow;
+            Top = win.Top + 50;
+            Left = win.Left;
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             Settings.Default.Save();
-            MainWindow wd = (MainWindow)Application.Current.MainWindow;
-            wd.RefreshCredentials();
+            MainWindow win = Application.Current.MainWindow as MainWindow;
+            win.RefreshCredentials();
         }
     }
 }

@@ -16,10 +16,12 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" Grid.Row="0" Content="OCR" Click="OCR_Button_Click"/>
-        <Button Grid.Column="1" Grid.Row="0" Content="Credentials" Click="Credentials_Button_Click"/>
-        <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap"
+        <Button Grid.Column="1" Grid.Row="0" Content="Groups" Click="GroupButtonOnClick" />
+        <Button Grid.Column="2" Grid.Row="0" Content="Credentials" Click="Credentials_Button_Click"/>
+        <TextBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap"
                  Text="{Binding ocrResult}"/>
 
     </Grid>
