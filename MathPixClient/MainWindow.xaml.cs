@@ -22,15 +22,7 @@ namespace MathPixClient
 
         private string _rawOcr;
         private string _ocrResult;
-        private List<(string, string)> _substitutions =
-            new List<(string, string)>
-            {
-                ("\\(", "[$]"),
-                ("\\)", "[/$]"),
-                ("\\[", "<dd>[$$]"),
-                ("\\]", "[/$$]</dd>"),
-                ("\\bar", "\\overline")
-            };
+        
         public string ocrResult
         {
             get { return _ocrResult; }
@@ -56,9 +48,12 @@ namespace MathPixClient
         {
             string result = input;
 
-            foreach (var (a, b) in _substitutions)
+            App app = Application.Current as App;
+            var Substitutions = app.Cfg.ActiveSubstitutions;
+
+            foreach (var s in Substitutions)
             {
-                result = result.Replace(a, b);
+                result = result.Replace(s.From, s.To);
             }
 
             return result;

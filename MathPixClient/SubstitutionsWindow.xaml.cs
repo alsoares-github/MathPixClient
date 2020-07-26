@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,21 @@ namespace MathPixClient
 
             App app = Application.Current as App;
 
-            SubsGroup.ItemsSource = app.GroupNames;
+            SubsGroup.ItemsSource = app.Cfg.GroupNames;
+            SubsGroup.SelectedIndex = app.Cfg.SelectedGroup;
+            
+
+            Substitutions.ItemsSource = app.Cfg.ActiveSubstitutions;
+            Substitutions.CanUserAddRows = true;
+            Substitutions.CanUserDeleteRows = true;
+        }
+
+        private void OnSubsGroupSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App app = Application.Current as App;
+
+            app.Cfg.SetActiveGroup(SubsGroup.SelectedIndex);
+            Substitutions.ItemsSource = app.Cfg.ActiveSubstitutions;
         }
     }
 }

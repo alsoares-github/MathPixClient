@@ -2,32 +2,15 @@
 using System.Windows;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace MathPixClient
 {
     class App : Application
     {
-        private Config _cfg;
-
-        public List<string> GroupNames
-        {
-            get
-            {
-                return _GroupNames();
-            } 
-        }
-
-        private List<string> _GroupNames()
-        {
-            List<string> names = new List<string>();
-
-            foreach (var grp in _cfg.Groups)
-            {
-                names.Add(grp.Name);
-            }
-
-            return names;
-        }
+        public Config Cfg { get; }
+            = new Config();
 
         [STAThread]
         public static void Main()
@@ -42,13 +25,21 @@ namespace MathPixClient
         public App()
         {
             LoadConfigOrDefault();
+
         }
    
         private void LoadConfigOrDefault()
         {
-            _cfg = new Config();
-            _cfg.Groups.Add(new SubstitutionGroup("LaTeX"));
-            _cfg.Groups.Add(new SubstitutionGroup("SMA"));
+            Cfg.Groups.Add(new SubstitutionGroup("LaTeX"));
+            Cfg.Groups[0].Substitutions.Add(new Substitution { From = "\\bar", To = "\\overline" });
+            Cfg.Groups[0].Substitutions.Add(new Substitution { From = "\\backslash", To = "\\setminus" });
+            Cfg.Groups.Add(new SubstitutionGroup("SMA"));
+            Cfg.Groups[1].Substitutions = new List<Substitution>(Cfg.Groups[0].Substitutions);
+            Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\(", To = "[$]" });
+            Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\)", To = "[/$]" });
+            Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\[", To = "<dd>[$$]" });
+            Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\]", To = "[/$$]</dd>" });
+            Cfg.SetActiveGroup(1);
         }
     }
 }
