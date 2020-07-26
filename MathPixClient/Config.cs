@@ -8,27 +8,16 @@ namespace MathPixClient
     {
         public List<SubstitutionGroup> Groups { get; set; } = new List<SubstitutionGroup>();
 
-        public List<Substitution> ActiveSubstitutions { get; private set; }
-
-        public int SelectedGroup { get; private set; }
-
-        public List<string> GroupNames
-        { get
+        public List<Substitution> ActiveSubstitutions
+        {
+            get
             {
-                List<string> L = new List<string>();
-                foreach (var g in Groups)
-                {
-                    L.Add(g.Name);
-                }
-                return L;
+                return SelectedGroup.Substitutions;
             }
         }
 
-        public void SetActiveGroup(int idx)
-        {
-            SelectedGroup = idx;
-            ActiveSubstitutions = Groups[idx].Substitutions;
-        }
+        public SubstitutionGroup SelectedGroup { get; set; }
+
     }
 
     public class SubstitutionGroup

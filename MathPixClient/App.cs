@@ -39,7 +39,7 @@ namespace MathPixClient
             Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\)", To = "[/$]" });
             Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\[", To = "<dd>[$$]" });
             Cfg.Groups[1].Substitutions.Add(new Substitution { From = "\\]", To = "[/$$]</dd>" });
-            Cfg.SetActiveGroup(1);
+            Cfg.SelectedGroup = Cfg.Groups[1];
         }
     }
 }

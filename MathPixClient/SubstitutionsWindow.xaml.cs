@@ -24,21 +24,20 @@ namespace MathPixClient
 
             App app = Application.Current as App;
 
-            SubsGroup.ItemsSource = app.Cfg.GroupNames;
-            SubsGroup.SelectedIndex = app.Cfg.SelectedGroup;
-            
+            SubsGroup.ItemsSource = app.Cfg.Groups;
+            SubsGroup.DisplayMemberPath = "Name";
+            SubsGroup.IsSynchronizedWithCurrentItem = true;
+            Binding bd1 = new Binding();
+            bd1.Source = app.Cfg;
+            bd1.Path = new PropertyPath("SelectedGroup");
+            SubsGroup.SetBinding(ComboBox.SelectedValueProperty, bd1);
 
-            Substitutions.ItemsSource = app.Cfg.ActiveSubstitutions;
+            Binding b = new Binding();
+            b.Source = app.Cfg.Groups;
+            b.Path = new PropertyPath("Substitutions");
+            Substitutions.SetBinding(DataGrid.ItemsSourceProperty, b);   
             Substitutions.CanUserAddRows = true;
             Substitutions.CanUserDeleteRows = true;
-        }
-
-        private void OnSubsGroupSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            App app = Application.Current as App;
-
-            app.Cfg.SetActiveGroup(SubsGroup.SelectedIndex);
-            Substitutions.ItemsSource = app.Cfg.ActiveSubstitutions;
         }
     }
 }

@@ -17,7 +17,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <ComboBox x:Name="SubsGroup" Grid.Column="0" Grid.Row="0"
-                  SelectionChanged="OnSubsGroupSelectionChanged"/>
+                  />
         <Button x:Name="Add" Content="Add" Grid.Column="1" Grid.Row="0" />
         <Button x:Name="Delete" Content="Delete" Grid.Column="2" Grid.Row="0" />
         <DataGrid x:Name="Substitutions" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" />
